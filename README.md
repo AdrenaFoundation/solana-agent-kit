@@ -205,6 +205,32 @@ const price = await agent.pythFetchPrice(
 console.log("Price in BTC/USD:", price);
 ```
 
+### Open PERP Trade
+
+```typescript
+import { PublicKey } from "@solana/web3.js";
+
+const signature = await agent.openPerpTradeLong({
+  price: 200, // $200 SOL price
+  collateralAmount: 10,
+  collateralMint: new PublicKey("J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn"), // jitoSOL
+  leverage: 50000, // x5
+  tradeMint: new PublicKey("J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn"), // jitoSOL
+  slippage: 0.3, // 0.3%
+});
+```
+
+### Close PERP Trade
+
+```typescript
+import { PublicKey } from "@solana/web3.js";
+
+const signature = await agent.closePerpTradeLong({
+  price: 200, // $200 SOL price
+  tradeMint: new PublicKey("J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn"), // jitoSOL
+});
+```
+
 ## Examples
 
 ### LangGraph Multi-Agent System

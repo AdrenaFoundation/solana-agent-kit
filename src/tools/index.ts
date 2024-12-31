@@ -6,7 +6,7 @@ export * from "./get_balance_other";
 export * from "./mint_nft";
 export * from "./transfer";
 export * from "./trade";
-export * from "./perp_trading";
+export * from "./adrena_perp_trading";
 export * from "./register_domain";
 export * from "./resolve_sol_domain";
 export * from "./get_primary_domain";
