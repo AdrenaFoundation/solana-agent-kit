@@ -20,6 +20,10 @@ import {
   registerDomain,
   request_faucet_funds,
   trade,
+  closePerpTradeShort,
+  closePerpTradeLong,
+  openPerpTradeShort,
+  openPerpTradeLong,
   transfer,
   getTokenDataByAddress,
   getTokenDataByTicker,
@@ -151,6 +155,42 @@ export class SolanaAgentKit {
     slippageBps: number = DEFAULT_OPTIONS.SLIPPAGE_BPS,
   ): Promise<string> {
     return trade(this, outputMint, inputAmount, inputMint, slippageBps);
+  }
+
+  async openPerpTradeLong(
+    args: Omit<Parameters<typeof openPerpTradeLong>[0], "agent">,
+  ): Promise<string> {
+    return openPerpTradeLong({
+      agent: this,
+      ...args,
+    });
+  }
+
+  async openPerpTradeShort(
+    args: Omit<Parameters<typeof openPerpTradeShort>[0], "agent">,
+  ): Promise<string> {
+    return openPerpTradeShort({
+      agent: this,
+      ...args,
+    });
+  }
+
+  async closePerpTradeShort(
+    args: Omit<Parameters<typeof closePerpTradeShort>[0], "agent">,
+  ): Promise<string> {
+    return closePerpTradeShort({
+      agent: this,
+      ...args,
+    });
+  }
+
+  async closePerpTradeLong(
+    args: Omit<Parameters<typeof closePerpTradeLong>[0], "agent">,
+  ): Promise<string> {
+    return closePerpTradeLong({
+      agent: this,
+      ...args,
+    });
   }
 
   async lendAssets(amount: number): Promise<string> {
@@ -414,10 +454,7 @@ export class SolanaAgentKit {
     return create_TipLink(this, amount, splmintAddress);
   }
 
-  async tensorListNFT(
-    nftMint: PublicKey,
-    price: number,
-  ): Promise<string> {
+  async tensorListNFT(nftMint: PublicKey, price: number): Promise<string> {
     return listNFTForSale(this, nftMint, price);
   }
 

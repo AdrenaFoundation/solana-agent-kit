@@ -53,6 +53,7 @@ Anyone - whether an SF-based AI researcher or a crypto-native builder - can brin
   - Jito Bundles
   - Pyth Price feeds for fetching Asset Prices
   - Register/resolve Alldomains
+  - Perpetuals Trading with Adrena Protocol
 
 - **Solana Blinks**
    - Lending by Lulon (Best APR for USDC)
