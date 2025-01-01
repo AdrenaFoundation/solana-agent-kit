@@ -211,8 +211,8 @@ console.log("Price in BTC/USD:", price);
 import { PublicKey } from "@solana/web3.js";
 
 const signature = await agent.openPerpTradeLong({
-  price: 200, // $200 SOL price
-  collateralAmount: 10,
+  price: 300, // $300 SOL Max price
+  collateralAmount: 10, // 10 jitoSOL in
   collateralMint: new PublicKey("J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn"), // jitoSOL
   leverage: 50000, // x5
   tradeMint: new PublicKey("J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn"), // jitoSOL

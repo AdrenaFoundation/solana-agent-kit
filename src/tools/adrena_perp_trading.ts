@@ -7,12 +7,14 @@ import { SolanaAgentKit } from "../index";
 import { TOKENS, DEFAULT_OPTIONS } from "../constants";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { BN } from "@coral-xyz/anchor";
-import AdrenaJson from "../idls/adrena.json";
 
 import AdrenaClient from "../utils/AdrenaClient";
+import { sendTx } from "../utils/send_tx";
 
 const PRICE_DECIMALS = 10;
-const ADRENA_PROGRAM_ID = new PublicKey(AdrenaJson.metadata.address);
+const ADRENA_PROGRAM_ID = new PublicKey(
+  "13gDzEXCdocbj8iAiqrScGo47NiSuYENGsRqi3SEAwet",
+);
 
 // i.e percentage = -2 (for -2%)
 // i.e percentage = 5 (for 5%)
@@ -95,7 +97,7 @@ export async function closePerpTradeShort({
     );
   }
 
-  return client.program.methods
+  const instruction = await client.program.methods
     .closePositionShort({
       price: new BN(price * 10 ** PRICE_DECIMALS),
     })
@@ -125,8 +127,9 @@ export async function closePerpTradeShort({
       collateralCustodyOracle,
       collateralCustodyTokenAccount,
     })
-    .preInstructions(preInstructions)
-    .rpc();
+    .instruction();
+
+  return sendTx(agent, [...preInstructions, instruction]);
 }
 
 /**
@@ -190,7 +193,7 @@ export async function closePerpTradeLong({
     );
   }
 
-  return client.program.methods
+  const instruction = await client.program.methods
     .closePositionLong({
       price: new BN(price * 10 ** PRICE_DECIMALS),
     })
@@ -219,8 +222,9 @@ export async function closePerpTradeLong({
       userProfile: userProfile ? userProfilePda : null,
       caller: owner,
     })
-    .preInstructions(preInstructions)
-    .rpc();
+    .instruction();
+
+  return sendTx(agent, [...preInstructions, instruction]);
 }
 
 /**
@@ -314,7 +318,7 @@ export async function openPerpTradeLong({
     );
   }
 
-  return client.program.methods
+  const instruction = await client.program.methods
     .openOrIncreasePositionWithSwapLong({
       price: priceWithSlippage,
       collateral: scaledCollateralAmount,
@@ -351,8 +355,9 @@ export async function openPerpTradeLong({
       tokenProgram: TOKEN_PROGRAM_ID,
       adrenaProgram: ADRENA_PROGRAM_ID,
     })
-    .preInstructions(preInstructions)
-    .rpc();
+    .instruction();
+
+  return sendTx(agent, [...preInstructions, instruction]);
 }
 
 /**
@@ -456,7 +461,7 @@ export async function openPerpTradeShort({
       Math.pow(10, client.getCustodyByMint(collateralMint).decimals),
   );
 
-  return client.program.methods
+  const instruction = await client.program.methods
     .openOrIncreasePositionWithSwapShort({
       price: priceWithSlippage,
       collateral: scaledCollateralAmount,
@@ -495,6 +500,7 @@ export async function openPerpTradeShort({
       tokenProgram: TOKEN_PROGRAM_ID,
       adrenaProgram: ADRENA_PROGRAM_ID,
     })
-    .preInstructions(preInstructions)
-    .rpc();
+    .instruction();
+
+  return sendTx(agent, [...preInstructions, instruction]);
 }

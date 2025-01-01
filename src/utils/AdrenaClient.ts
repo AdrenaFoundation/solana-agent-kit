@@ -2,7 +2,6 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { SolanaAgentKit } from "../index";
 import { AnchorProvider, IdlAccounts, Program } from "@coral-xyz/anchor";
 import { Adrena, IDL as ADRENA_IDL } from "../idls/adrena";
-import AdrenaJson from "../idls/adrena.json";
 
 import NodeWallet from "@coral-xyz/anchor/dist/cjs/nodewallet";
 import {
@@ -24,7 +23,9 @@ export type Staking = Accounts["staking"];
 export type UserProfile = Accounts["userProfile"];
 
 export default class AdrenaClient {
-  public static programId = new PublicKey(AdrenaJson.metadata.address);
+  public static programId = new PublicKey(
+    "13gDzEXCdocbj8iAiqrScGo47NiSuYENGsRqi3SEAwet",
+  );
 
   constructor(
     public program: AdrenaProgram,
@@ -38,7 +39,7 @@ export default class AdrenaClient {
   );
 
   public static async load(agent: SolanaAgentKit): Promise<AdrenaClient> {
-    const program = new Program(
+    const program = new Program<Adrena>(
       ADRENA_IDL,
       AdrenaClient.programId,
       new AnchorProvider(agent.connection, new NodeWallet(agent.wallet), {
